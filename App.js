@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Home } from "./src/app/screens/Home";
+import { AddTurn } from "./src/app/screens/AddTurn";
 import { TamaguiProvider } from "tamagui";
 import config from "./tamagui.config";
 import { useFonts } from "expo-font";
@@ -28,7 +28,7 @@ const App = () => {
     <TamaguiProvider config={config}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="AddTurn" component={AddTurn} />
         </Stack.Navigator>
       </NavigationContainer>
     </TamaguiProvider>

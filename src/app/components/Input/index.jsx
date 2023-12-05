@@ -1,17 +1,16 @@
 import { Text, View, YStack, Input as InputTamagui } from "tamagui";
 
-const Input = ({ label = "", state, setState }) => {
+const Input = ({ label = "", type = "text", state, setState }) => {
   return (
     <View>
-      <YStack>
+      <YStack space="$1.5">
         {label && <Text>{label}</Text>}
         <InputTamagui
+          type={type}
           size="$4"
           borderWidth={2}
           value={state}
-          onChange={(e) => {
-            setState(e?.target?.value);
-          }}
+          onChangeText={setState}
           label={label}
         />
       </YStack>
