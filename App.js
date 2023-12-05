@@ -1,23 +1,17 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-import { Home } from './src/app/screens/Home';
-
-import { CombatDetails } from './src/app/screens/CombatDetails';
-
-import { TamaguiProvider } from 'tamagui';
-import config from './tamagui.config';
-
-import { useFonts } from 'expo-font';
-
-import { useEffect } from 'react';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { AddTurn } from "./src/app/screens/AddTurn";
+import { TamaguiProvider } from "tamagui";
+import config from "./tamagui.config";
+import { useFonts } from "expo-font";
+import { useEffect } from "react";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   const [loaded] = useFonts({
-    Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
-    InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
+    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
+    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   });
 
   useEffect(() => {
@@ -34,7 +28,7 @@ const App = () => {
     <TamaguiProvider config={config}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="AddTurn" component={AddTurn} />
         </Stack.Navigator>
       </NavigationContainer>
     </TamaguiProvider>
