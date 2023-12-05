@@ -3,7 +3,8 @@
 import { TamaguiProvider } from "tamagui";
 import config from "../tamagui.config";
 import { Text, View } from "react-native";
-export default function App() {
+
+const App = () => {
   return (
     <TamaguiProvider config={config}>
       <View>
@@ -11,4 +12,6 @@ export default function App() {
       </View>
     </TamaguiProvider>
   );
-}
+};
+
+export { App };
