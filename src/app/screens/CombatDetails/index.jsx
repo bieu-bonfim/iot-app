@@ -20,9 +20,10 @@ const CombatDetails = ({ combatDetails }) => {
   };
 
   const placeholderDetails = {
-    creatureName: 'Criatura',
-    hp: 'N/A',
-    modifier: 'N/A',
+    monsterName: 'Criatura',
+    monsterMaxLife: 'N/A',
+    monsterCurrentLife: 'N/A',
+    monsterModifier: 'N/A',
   };
 
   const details = combatDetails || placeholderDetails;
@@ -40,9 +41,10 @@ const CombatDetails = ({ combatDetails }) => {
           wrap="wrap"
         >
           <Text variant="h2">ID do Combate</Text>
-          <Text>Nome: {details.creatureName}</Text>
-          <Text>HP: {details.life}</Text>
-          <Text>Modificador: {details.modifier}</Text>
+          <Text>Name: {details.monsterName}</Text>
+          <Text>Max HP: {details.monsterMaxLife}</Text>
+          <Text>Current HP: {details.monsterCurrentLife}</Text>
+          <Text>Modifier: {details.monsterModifier}</Text>
           <Button onPress={handleDiceRoll} icon={<Plus size="$4" />}>
             Rolar dado
           </Button>

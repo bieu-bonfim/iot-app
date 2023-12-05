@@ -31,7 +31,7 @@ const App = () => {
     <TamaguiProvider config={config}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="AddCombat" component={AddCombat} 
+          <Stack.Screen name="AddTurn" component={AddTurn} 
             options={{
               headerShadowVisible: false,
               headerTitle: ""

@@ -8,7 +8,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AddTurn = () => {
   const [monsterName, setMonsterName] = useState("");
-  const [monsterLife, setMonsterLife] = useState(0);
+  const [monsterMaxLife, setMonsterMaxLife] = useState(0);
+  const [monsterCurrentLife, setMonsterCurrentLife] = useState(0);
   const [monsterModifier, setMonsterModifier] = useState(0);
 
   const handleBackToCombatDetails = () => {
@@ -21,11 +22,12 @@ const AddTurn = () => {
       if (!Array.isArray(turns)) {
         turns = JSON.parse(turns);
       }
-      turns.push({ monsterName, monsterLife, monsterModifier });
+      turns.push({ monsterName, monsterMaxLife, monsterCurrentLife, monsterModifier });
 
       await AsyncStorage.setItem("@bijas:turns", JSON.stringify(turns));
       setMonsterName("");
-      setMonsterLife(0);
+      setMonsterMaxLife(0);
+      setMonsterCurrentLife(0);
       setMonsterModifier(0);
     } catch (e) {
       console.log("deu erro", e);
@@ -45,9 +47,16 @@ const AddTurn = () => {
 
           <Input
             type="number"
-            label="Life"
-            state={monsterLife}
-            setState={setMonsterLife}
+            label="Max Life"
+            state={monsterMaxLife}
+            setState={setMonsterMaxLife}
+          />
+
+<Input
+            type="number"
+            label="Current Life"
+            state={monsterCurrentLife}
+            setState={setMonsterCurrentLife}
           />
 
           <Input
