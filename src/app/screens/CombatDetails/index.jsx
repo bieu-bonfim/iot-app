@@ -5,6 +5,11 @@ import { Plus } from '@tamagui/lucide-icons';
 import { StatusBar } from 'expo-status-bar';
 
 const CombatDetails = ({ combatDetails }) => {
+
+  const handleBackToHome = () => {
+    console.log("navigate back to home");
+  };
+
   const handleDiceRoll = () => {
     console.log('Rolando dado');
   };
@@ -24,7 +29,7 @@ const CombatDetails = ({ combatDetails }) => {
 
   return (
     <>
-      <Header title="Detalhes do Combate" onAddToList={handleAddTurn} />
+      <Header title="Detalhes do Combate" onAddToList={handleAddTurn} onBack={handleBackToHome} />
       <YStack flex={1} justifyContent="center" alignItems="center" space="$4">
         <YStack
           backgroundColor="#fff"

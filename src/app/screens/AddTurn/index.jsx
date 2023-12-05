@@ -11,6 +11,10 @@ const AddTurn = () => {
   const [monsterLife, setMonsterLife] = useState(0);
   const [monsterModifier, setMonsterModifier] = useState(0);
 
+  const handleBackToCombatDetails = () => {
+    console.log("navigate back to combat details");
+  };
+
   const handleAddTurn = async () => {
     try {
       let turns = (await AsyncStorage?.getItem?.("@bijas:turns")) || [];
@@ -30,25 +34,25 @@ const AddTurn = () => {
 
   return (
     <>
-      <Header title="Home" />
+      <Header title="Adding turn" onBack={handleBackToCombatDetails} />
       <View>
         <YStack space="$3" justifyContent="center" margin="auto">
           <Input
-            label="Nome da criatura"
+            label="Creature name"
             state={monsterName}
             setState={setMonsterName}
           />
 
           <Input
             type="number"
-            label="Vida"
+            label="Life"
             state={monsterLife}
             setState={setMonsterLife}
           />
 
           <Input
             type="number"
-            label="Modificador"
+            label="Damage modifier"
             state={monsterModifier}
             setState={setMonsterModifier}
           />
