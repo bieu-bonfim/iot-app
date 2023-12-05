@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, YStack, ScrollView, Button } from "tamagui";
-import Combate from "../../components/Combat";
+import { Header } from "../../components/Header";
+import CombatItem from "../../components/CombatItem";
 import React, { useState, useEffect } from "react";
 
 const getAllCombats = async () => {
@@ -18,10 +19,17 @@ const saveNewCombat = async (newCombat) => {
 const Home = () => {
   const [combatsList, setCombatsList] = useState([]);
 
+  const handleAddCombat = () => {
+    console.log('Navegar para a screen de adicionar combate');
+    // navigation.navigate('AddCombatScreen');
+  };
+
   const loadCombats = async () => {
     const combats = await getAllCombats();
     setCombatsList(combats);
   };
+
+  /* TODO: Move this logic to AddCombat Screen */
 
   const newCombat = {
     name: "Battle in the Forest",
@@ -33,38 +41,46 @@ const Home = () => {
     loadCombats();
   };
 
+  /* ---------------------------------- */
+
+ /* TODO: Add remove button to each CombatItem Component */
+
   const clearAll = async () => {
     await AsyncStorage.clear();
   };
+
+  /* ---------------------------------- */
 
   useEffect(() => {
     loadCombats();
   }, []);
 
   return (
-    <View>
-      <ScrollView marginTop={60} marginBottom={60} padding={20} height={"85%"}>
-        <YStack space="$4" alignItems="center">
-          {combatsList.map((combat) => {
-            return (
-              <Combate
-                text={combat.name}
-                onClick={() => handleSaveNewCombat()}
-              />
-            );
-          })}
-          <Button
-            backgroundColor={"$red8"}
-            onPress={() => {
-              clearAll();
-              handleSaveNewCombat();
-            }}
-          >
-            Excluir
-          </Button>
-        </YStack>
-      </ScrollView>
-    </View>
+    <>
+      <Header title="Combats" onAddToList={handleAddCombat} />
+      <View>
+        <ScrollView marginTop={60} marginBottom={60} padding={20} height={"85%"}>
+          <YStack space="$4" alignItems="center">
+            {combatsList.map((combat) => {
+              return (
+                <CombatItem
+                  text={combat.name}
+                  onClick={() => handleSaveNewCombat()} />
+              );
+            })}
+            <Button
+              backgroundColor={"$red8"}
+              onPress={() => {
+                clearAll();
+                handleSaveNewCombat();
+              } }
+            >
+              Excluir
+            </Button>
+          </YStack>
+        </ScrollView>
+      </View>
+    </>
   );
 };
 

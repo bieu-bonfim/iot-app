@@ -1,6 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AddTurn } from "./src/app/screens/AddTurn";
+import { CombatDetails } from "./src/app/screens/CombatDetails";
+import { AddCombat } from "./src/app/screens/AddCombat";
+import { Home } from "./src/app/screens/Home";
 import { TamaguiProvider } from "tamagui";
 import config from "./tamagui.config";
 import { useFonts } from "expo-font";
@@ -28,7 +31,12 @@ const App = () => {
     <TamaguiProvider config={config}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="AddTurn" component={AddTurn} />
+          <Stack.Screen name="AddCombat" component={AddCombat} 
+            options={{
+              headerShadowVisible: false,
+              headerTitle: ""
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </TamaguiProvider>

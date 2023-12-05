@@ -5,9 +5,13 @@ import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { YStack } from "tamagui";
 
-const CreateCombat = () => {
+const AddCombat = () => {
   const [monsterName, setMonsterName] = useState("");
   const [monsterList, setMonsterList] = useState([]);
+
+  const handleBackToHome = () => {
+    console.log("navigate back to home");
+  };
 
   const handleAddToList = () => {
     if (monsterName.trim() !== "") {
@@ -16,9 +20,10 @@ const CreateCombat = () => {
     }
   };
 
+    
   return (
     <>
-      <Header title="Home" onAddToList={handleAddToList} />
+      <Header title="Creating new Combat" onAddToList={handleAddToList} onBack={handleBackToHome} />
       <View>
         <YStack space="$3">
           <Input label="Adicione seu combate" state={monsterName} setState={setMonsterName} />
@@ -35,4 +40,4 @@ const CreateCombat = () => {
   );
 };
 
-export { CreateCombat };
+export { AddCombat };
