@@ -9,7 +9,8 @@ import axios from "axios";
 
 const CombatDetails = ({ navigation, route }) => {
   const [activeTurnId, setActiveTurnId] = useState("0");
-  const [diceResult, setDiceResult] = useState();
+  const [activeTurnIndex, setActiveTurnIndex] = useState(0);
+  const [diceResult, setDiceResult] = useState(0);
   const [combat, setCombat] = useState(route.params);
 
   const handleBackToHome = () => {
@@ -19,13 +20,11 @@ const CombatDetails = ({ navigation, route }) => {
 
   const handleDiceRoll = () => {
     axios.get("http://34.95.159.23:5000/api/roll").then((response) => {
-      console.log(response.data);
       setDiceResult(response.data.roll);
     }); 
   };
 
   const handleAddTurn = () => {
-    console.log("Navegar para a screen de adicionar turnos");
     navigation.navigate("AddTurn", route.params);
   };
 
@@ -33,7 +32,7 @@ const CombatDetails = ({ navigation, route }) => {
 
   const handleEndTurn = async () => {
     setActiveTurnId("0");
-    setDiceResult(undefined);
+    setDiceResult(0);
   };
 
   const handleTurnClick = async (turnId) => {
@@ -44,7 +43,7 @@ const CombatDetails = ({ navigation, route }) => {
         );
         const newCombatTurns = [...combatTurns];
         newCombatTurns[turnIndex].monsterCurrentLife -=
-          diceResult + newCombatTurns[turnIndex].monsterModifier;
+          parseInt(diceResult) + parseInt(newCombatTurns[activeTurnIndex].monsterModifier);
 
         let combats = (await AsyncStorage?.getItem?.("@bijas:combats")) || [];
         if (!Array.isArray(combats)) {
@@ -56,6 +55,8 @@ const CombatDetails = ({ navigation, route }) => {
         await AsyncStorage.setItem("@bijas:combats", JSON.stringify(combats));
       } else {
         setActiveTurnId(turnId);
+        const index = combatTurns.findIndex((turn) => turn.turnId === turnId);
+        setActiveTurnIndex(index);
       }
     } catch (e) {
       console.log("deu erro", e);

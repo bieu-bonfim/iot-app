@@ -41,7 +41,7 @@ const AddTurn = ({ navigation, route }) => {
     <>
       <Header title="Adding turn" onBack={handleBackToCombatDetails} />
       <View>
-        <YStack space="$3" justifyContent="center" margin="auto">
+        <YStack space="$3" justifyContent="center" margin="auto" paddingTop={100}>
           <Input
             label="Creature name"
             state={monsterName}
