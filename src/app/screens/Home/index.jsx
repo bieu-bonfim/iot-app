@@ -3,6 +3,8 @@ import { View, YStack, ScrollView, Button } from "tamagui";
 import { Header } from "../../components/Header";
 import CombatItem from "../../components/CombatItem";
 import React, { useState, useEffect } from "react";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const getAllCombats = async () => {
   const jsonValue = await AsyncStorage.getItem("combats");
@@ -16,12 +18,12 @@ const saveNewCombat = async (newCombat) => {
   await AsyncStorage.setItem("combats", jsonValue);
 };
 
-const Home = () => {
+const Home = ({navigation}) => {
   const [combatsList, setCombatsList] = useState([]);
 
   const handleAddCombat = () => {
     console.log('Navegar para a screen de adicionar combate');
-    // navigation.navigate('AddCombatScreen');
+    navigation.navigate('AddCombat');
   };
 
   const loadCombats = async () => {
@@ -65,7 +67,7 @@ const Home = () => {
               return (
                 <CombatItem
                   text={combat.name}
-                  onClick={() => handleSaveNewCombat()} />
+                  onClick={() => navigation.navigate("CombatDetails")} />
               );
             })}
             <Button

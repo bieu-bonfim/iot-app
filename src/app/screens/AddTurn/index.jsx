@@ -6,14 +6,14 @@ import { YStack, Button } from "tamagui";
 import { Check } from "@tamagui/lucide-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const AddTurn = () => {
+const AddTurn = ({navigation}) => {
   const [monsterName, setMonsterName] = useState("");
   const [monsterMaxLife, setMonsterMaxLife] = useState(0);
   const [monsterCurrentLife, setMonsterCurrentLife] = useState(0);
   const [monsterModifier, setMonsterModifier] = useState(0);
 
   const handleBackToCombatDetails = () => {
-    console.log("navigate back to combat details");
+    navigation.navigate('CombatDetails'); 
   };
 
   const handleAddTurn = async () => {

@@ -4,10 +4,11 @@ import { Header } from '../../components/Header';
 import { Plus } from '@tamagui/lucide-icons';
 import { StatusBar } from 'expo-status-bar';
 
-const CombatDetails = ({ combatDetails }) => {
+const CombatDetails = ({ combatDetails, navigation }) => {
 
   const handleBackToHome = () => {
     console.log("navigate back to home");
+    navigation.navigate('Home');
   };
 
   const handleDiceRoll = () => {
@@ -16,7 +17,7 @@ const CombatDetails = ({ combatDetails }) => {
 
   const handleAddTurn = () => {
     console.log('Navegar para a screen de adicionar turnos');
-    // navigation.navigate('AddTurnsScreen');
+    navigation.navigate('AddTurn');
   };
 
   const placeholderDetails = {

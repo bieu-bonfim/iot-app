@@ -11,6 +11,7 @@ const AddCombat = () => {
 
   const handleBackToHome = () => {
     console.log("navigate back to home");
+    navigation.navigate('Home');
   };
 
   const handleAddToList = () => {

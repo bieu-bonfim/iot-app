@@ -30,7 +30,25 @@ const App = () => {
   return (
     <TamaguiProvider config={config}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={Home} 
+            options={{
+              headerShadowVisible: false,
+              headerTitle: ""
+            }}
+          />
+          <Stack.Screen name="AddCombat" component={AddCombat} 
+            options={{
+              headerShadowVisible: false,
+              headerTitle: ""
+            }}
+          />
+          <Stack.Screen name="CombatDetails" component={CombatDetails} 
+            options={{
+              headerShadowVisible: false,
+              headerTitle: ""
+            }}
+          />
           <Stack.Screen name="AddTurn" component={AddTurn} 
             options={{
               headerShadowVisible: false,
