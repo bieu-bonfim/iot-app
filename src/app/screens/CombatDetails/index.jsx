@@ -3,8 +3,9 @@ import { View, Button, Text, XStack, YStack } from 'tamagui';
 import { Header } from '../../components/Header';
 import { Plus } from '@tamagui/lucide-icons';
 import { StatusBar } from 'expo-status-bar';
+import TurnItem from '../../components/TurnItem';
 
-const CombatDetails = ({ combatDetails, navigation }) => {
+const CombatDetails = ({ navigation, route }) => {
 
   const handleBackToHome = () => {
     console.log("navigate back to home");
@@ -17,17 +18,10 @@ const CombatDetails = ({ combatDetails, navigation }) => {
 
   const handleAddTurn = () => {
     console.log('Navegar para a screen de adicionar turnos');
-    navigation.navigate('AddTurn');
+    navigation.navigate('AddTurn', route.params);
   };
 
-  const placeholderDetails = {
-    monsterName: 'Criatura',
-    monsterMaxLife: 'N/A',
-    monsterCurrentLife: 'N/A',
-    monsterModifier: 'N/A',
-  };
-
-  const details = combatDetails || placeholderDetails;
+  const { combatId, combatName, combatTurns } = route.params;
 
   return (
     <>
@@ -40,12 +34,22 @@ const CombatDetails = ({ combatDetails, navigation }) => {
           alignItems="center"
           space="$2"
           wrap="wrap"
+          gap="$2"
         >
-          <Text variant="h2">ID do Combate</Text>
-          <Text>Name: {details.monsterName}</Text>
-          <Text>Max HP: {details.monsterMaxLife}</Text>
-          <Text>Current HP: {details.monsterCurrentLife}</Text>
-          <Text>Modifier: {details.monsterModifier}</Text>
+          <Text variant="h2">{combatName}</Text>
+          
+          {combatTurns.map((turn) => {
+            return (
+              <TurnItem
+                key={turn.monsterName}
+                monsterName={turn.monsterName}
+                monsterCurrentLife={turn.monsterCurrentLife}
+                monsterMaxLife={turn.monsterMaxLife}
+                monsterModifier={turn.monsterModifier}
+                onClick={() => console.log('clicked on '+ turn.monsterName)} />
+            );
+          })}
+
           <Button onPress={handleDiceRoll} icon={<Plus size="$4" />}>
             Rolar dado
           </Button>

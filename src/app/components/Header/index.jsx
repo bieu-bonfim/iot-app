@@ -10,7 +10,7 @@ const Header = ({ title = "", onAddToList = null, onBack = null }) => {
         flexWrap="wrap"
         backgroundColor="#fff"
         alignItems="center"
-        justifyContent="space-between"
+        justifyContent={onAddToList ? "space-between" : "center"}
       >
         {onBack && <Button icon={<StepBack size="$1.5" />} onPress={onBack}></Button>}
         <Text>{title}</Text>

@@ -3,38 +3,47 @@ import React, { useState } from "react";
 import { View, Button, Text } from "tamagui";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
+import { Check } from "@tamagui/lucide-icons";
 import { YStack } from "tamagui";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { v4 } from "uuid";
 
 const AddCombat = () => {
-  const [monsterName, setMonsterName] = useState("");
-  const [monsterList, setMonsterList] = useState([]);
+  const [combatName, setCombatName] = useState("");
 
   const handleBackToHome = () => {
-    console.log("navigate back to home");
     navigation.navigate('Home');
   };
 
-  const handleAddToList = () => {
-    if (monsterName.trim() !== "") {
-      setMonsterList((prevList) => [...prevList, monsterName]);
-      setMonsterName("");
+  const handleAddCombat = async () => {
+    try {
+      if (combatName.trim() === "") return;
+      let combats = (await AsyncStorage?.getItem?.("@bijas:combats")) || [];
+      if (!Array.isArray(combats)) {
+        combats = JSON.parse(combats);
+      }
+      combats.push({combatName, combatId: v4(), combatTurns: []});
+  
+      await AsyncStorage.setItem("@bijas:combats", JSON.stringify(combats));
+      handleBackToHome();
+    }
+    catch (e) {
+      console.log("deu erro", e);
     }
   };
 
     
   return (
     <>
-      <Header title="Creating new Combat" onAddToList={handleAddToList} onBack={handleBackToHome} />
+      <Header title="Creating new Combat" onBack={handleBackToHome} />
       <View>
-        <YStack space="$3">
-          <Input label="Adicione seu combate" state={monsterName} setState={setMonsterName} />
-          <YStack space="$2">
-            {monsterList.map((monster, index) => (
-              <View key={index} style={{ borderColor: "black", borderWidth: 1, padding: 10, borderRadius: 8, width: 40, height: 40 }}>
-                <Text>{monster}</Text>
-              </View>
-            ))}
-          </YStack>
+        <YStack space="$3" flex={1} justifyContent="center" alignItems="center">
+          <Input label="Adicione seu combate" state={combatName} setState={setCombatName} />
+          <Button
+            backgroundColor="green"
+            icon={<Check size="$3" />}
+            onPress={handleAddCombat}
+          ></Button>
         </YStack>
       </View>
     </>

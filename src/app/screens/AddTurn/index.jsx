@@ -6,25 +6,27 @@ import { YStack, Button } from "tamagui";
 import { Check } from "@tamagui/lucide-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const AddTurn = ({navigation}) => {
+const AddTurn = ({ navigation, route }) => {
   const [monsterName, setMonsterName] = useState("");
   const [monsterMaxLife, setMonsterMaxLife] = useState(0);
   const [monsterCurrentLife, setMonsterCurrentLife] = useState(0);
   const [monsterModifier, setMonsterModifier] = useState(0);
+  const [combat, setCombat] = useState(route.params);
 
   const handleBackToCombatDetails = () => {
-    navigation.navigate('CombatDetails'); 
+    navigation.navigate('CombatDetails', combat); 
   };
 
   const handleAddTurn = async () => {
     try {
-      let turns = (await AsyncStorage?.getItem?.("@bijas:turns")) || [];
-      if (!Array.isArray(turns)) {
-        turns = JSON.parse(turns);
+      let combats = (await AsyncStorage?.getItem?.("@bijas:combats")) || [];
+      if (!Array.isArray(combats)) {
+        combats = JSON.parse(combats);
       }
-      turns.push({ monsterName, monsterMaxLife, monsterCurrentLife, monsterModifier });
-
-      await AsyncStorage.setItem("@bijas:turns", JSON.stringify(turns));
+      const combatIndex = combats.findIndex((c) => c.combatId === combat.combatId);
+      combats[combatIndex].combatTurns.push({ monsterName, monsterMaxLife, monsterCurrentLife, monsterModifier });
+      setCombat({ ...combat, combatTurns: combats[combatIndex].combatTurns});
+      await AsyncStorage.setItem("@bijas:combats", JSON.stringify(combats));
       setMonsterName("");
       setMonsterMaxLife(0);
       setMonsterCurrentLife(0);
@@ -52,7 +54,7 @@ const AddTurn = ({navigation}) => {
             setState={setMonsterMaxLife}
           />
 
-<Input
+          <Input
             type="number"
             label="Current Life"
             state={monsterCurrentLife}

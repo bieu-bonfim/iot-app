@@ -3,22 +3,13 @@ import { View, YStack, ScrollView, Button } from "tamagui";
 import { Header } from "../../components/Header";
 import CombatItem from "../../components/CombatItem";
 import React, { useState, useEffect } from "react";
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const getAllCombats = async () => {
-  const jsonValue = await AsyncStorage.getItem("combats");
+  const jsonValue = await AsyncStorage.getItem("@bijas:combats");
   return jsonValue != null ? JSON.parse(jsonValue) : [];
 };
 
-const saveNewCombat = async (newCombat) => {
-  const existingCombats = await getAllCombats();
-  const updatedCombats = [...existingCombats, newCombat];
-  const jsonValue = JSON.stringify(updatedCombats);
-  await AsyncStorage.setItem("combats", jsonValue);
-};
-
-const Home = ({navigation}) => {
+const Home = ({navigation, route}) => {
   const [combatsList, setCombatsList] = useState([]);
 
   const handleAddCombat = () => {
@@ -31,20 +22,6 @@ const Home = ({navigation}) => {
     setCombatsList(combats);
   };
 
-  /* TODO: Move this logic to AddCombat Screen */
-
-  const newCombat = {
-    name: "Battle in the Forest",
-    turns: [{ monsterName: "Goblin", monsterLife: 30, monsterModifier: 2 }],
-  };
-
-  const handleSaveNewCombat = async () => {
-    await saveNewCombat(newCombat);
-    loadCombats();
-  };
-
-  /* ---------------------------------- */
-
  /* TODO: Add remove button to each CombatItem Component */
 
   const clearAll = async () => {
@@ -55,7 +32,7 @@ const Home = ({navigation}) => {
 
   useEffect(() => {
     loadCombats();
-  }, []);
+  }, [route, combatsList]);
 
   return (
     <>
@@ -66,15 +43,15 @@ const Home = ({navigation}) => {
             {combatsList.map((combat) => {
               return (
                 <CombatItem
-                  text={combat.name}
-                  onClick={() => navigation.navigate("CombatDetails")} />
+                  key={combat.combatId}
+                  text={combat.combatName}
+                  onClick={() => navigation.navigate("CombatDetails", combat )} />
               );
             })}
             <Button
               backgroundColor={"$red8"}
               onPress={() => {
                 clearAll();
-                handleSaveNewCombat();
               } }
             >
               Excluir
