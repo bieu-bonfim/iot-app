@@ -5,6 +5,7 @@ import { Input } from "../../components/Input";
 import { YStack, Button } from "tamagui";
 import { Check } from "@tamagui/lucide-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { v4 } from "uuid";
 
 const AddTurn = ({ navigation, route }) => {
   const [monsterName, setMonsterName] = useState("");
@@ -24,7 +25,7 @@ const AddTurn = ({ navigation, route }) => {
         combats = JSON.parse(combats);
       }
       const combatIndex = combats.findIndex((c) => c.combatId === combat.combatId);
-      combats[combatIndex].combatTurns.push({ monsterName, monsterMaxLife, monsterCurrentLife, monsterModifier });
+      combats[combatIndex].combatTurns.push({ monsterName, monsterMaxLife, monsterCurrentLife, monsterModifier, turnId: v4()});
       setCombat({ ...combat, combatTurns: combats[combatIndex].combatTurns});
       await AsyncStorage.setItem("@bijas:combats", JSON.stringify(combats));
       setMonsterName("");

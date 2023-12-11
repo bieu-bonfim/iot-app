@@ -1,11 +1,11 @@
 import { Button, Text, YStack } from "tamagui";
 
-const TurnItem = ({ onClick, monsterName, monsterMaxLife, monsterCurrentLife, monsterModifier }) => {
+const TurnItem = ({ onClick, monsterName, monsterMaxLife, monsterCurrentLife, monsterModifier, activeTurnId, turnId }) => {
   return (
 
       <YStack
         padding="$3"
-        backgroundColor="$blue6" 
+        backgroundColor={activeTurnId == turnId ? "$red6" : "$blue6"} 
         width="90%" 
         onPress={onClick} 
         display="flex"
