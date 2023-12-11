@@ -6,9 +6,9 @@ import { Input } from "../../components/Input";
 import { Check } from "@tamagui/lucide-icons";
 import { YStack } from "tamagui";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { v4 } from "uuid";
+import uuid from 'react-native-uuid';
 
-const AddCombat = () => {
+const AddCombat = ({navigation}) => {
   const [combatName, setCombatName] = useState("");
 
   const handleBackToHome = () => {
@@ -22,7 +22,7 @@ const AddCombat = () => {
       if (!Array.isArray(combats)) {
         combats = JSON.parse(combats);
       }
-      combats.push({combatName, combatId: v4(), combatTurns: []});
+      combats.push({combatName, combatId: uuid.v4(), combatTurns: []});
   
       await AsyncStorage.setItem("@bijas:combats", JSON.stringify(combats));
       handleBackToHome();
@@ -35,11 +35,16 @@ const AddCombat = () => {
     
   return (
     <>
-      <Header title="Creating new Combat" onBack={handleBackToHome} />
+      <Header title="Creating Combat" onBack={handleBackToHome} />
       <View>
-        <YStack space="$3" flex={1} justifyContent="center" alignItems="center">
-          <Input label="Adicione seu combate" state={combatName} setState={setCombatName} />
+        <YStack space="$3" flex={1} justifyContent="center" padding={100}>
+          <Input 
+            label="Combat Name" 
+            state={combatName} 
+            setState={setCombatName} 
+          />
           <Button
+          marginTop={50}
             backgroundColor="green"
             icon={<Check size="$3" />}
             onPress={handleAddCombat}
